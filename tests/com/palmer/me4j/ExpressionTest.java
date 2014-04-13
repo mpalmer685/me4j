@@ -2,8 +2,6 @@ package com.palmer.me4j;
 
 import org.junit.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.EmptyStackException;
 
 import static org.junit.Assert.*;
@@ -11,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Mike Palmer on 4/12/14.
  */
-public class MathEvaluatorTest
+public class ExpressionTest
 {
     @Test
     public void testSimpleArithmetic ()
@@ -19,7 +17,7 @@ public class MathEvaluatorTest
         String expression = "6 + 4 / 2";
         double expected = 8.0;
 
-        assertEquals (0, Double.compare (expected, MathEvaluator.evaluate (expression)));
+        assertEquals (0, Double.compare (expected, new Expression (expression).evaluate ()));
     }
 
     @Test
@@ -28,7 +26,7 @@ public class MathEvaluatorTest
         String expression = "( 6 + 4 ) / 2";
         double expected = 5.0;
 
-        assertEquals (0, Double.compare (expected, MathEvaluator.evaluate (expression)));
+        assertEquals (0, Double.compare (expected, new Expression (expression).evaluate ()));
     }
 
     @Test
@@ -37,7 +35,7 @@ public class MathEvaluatorTest
         String expression = "20 * 5.0 / ( ( 10.5 - 6.5 ) + 4.0 )";
         double expected = 12.5;
 
-        assertEquals (0, Double.compare (expected, MathEvaluator.evaluate (expression)));
+        assertEquals (0, Double.compare (expected, new Expression (expression).evaluate ()));
     }
 
     @Test
@@ -48,7 +46,7 @@ public class MathEvaluatorTest
 
         try
         {
-            MathEvaluator.evaluate (expression);
+            new Expression (expression).evaluate ();
             fail ("Invalid expression formatting did not throw exception.");
         }
         catch (Exception e)
@@ -68,7 +66,7 @@ public class MathEvaluatorTest
 
         try
         {
-            MathEvaluator.evaluate (expression);
+            new Expression (expression).evaluate ();
             fail ("Invalid expression did not throw exception.");
         }
         catch (Exception e)
@@ -78,27 +76,5 @@ public class MathEvaluatorTest
 
         assertNotNull (expected);
         assertTrue (expected instanceof EmptyStackException);
-    }
-
-    @Test
-    public void testPrivateConstructorThrowsException () throws Exception
-    {
-        Exception exception = null;
-
-        Constructor<MathEvaluator> constructor = MathEvaluator.class.getDeclaredConstructor ();
-        constructor.setAccessible (true);
-
-        try
-        {
-            constructor.newInstance ();
-            fail ("No Exception thrown.");
-        }
-        catch (InvocationTargetException e)
-        {
-            exception = (Exception) e.getCause ();
-        }
-
-        assertNotNull (exception);
-        assertTrue (exception instanceof UnsupportedOperationException);
     }
 }
