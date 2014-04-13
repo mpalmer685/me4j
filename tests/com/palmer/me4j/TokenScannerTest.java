@@ -18,7 +18,7 @@ public class TokenScannerTest
     @Test
     public void testTokenize ()
     {
-        String input = "+ - * / ( ) 1.0 -1.0 0.0";
+        String input = "+ - * / ( ) [ ] { } 1.0 -1.0 0.0";
         Token[] tokenArray = new Token[]
                 {
                         AdditionOperatorToken.INSTANCE,
@@ -27,6 +27,10 @@ public class TokenScannerTest
                         DivisionOperatorToken.INSTANCE,
                         ParensGroupingToken.INSTANCE.getLeftOperator (),
                         ParensGroupingToken.INSTANCE.getRightOperator (),
+                        SquareBraceGroupingToken.INSTANCE.getLeftOperator (),
+                        SquareBraceGroupingToken.INSTANCE.getRightOperator (),
+                        CurlyBraceGroupingToken.INSTANCE.getLeftOperator (),
+                        CurlyBraceGroupingToken.INSTANCE.getRightOperator (),
                         new OperandToken (1.0),
                         new OperandToken (-1.0),
                         new OperandToken (0.0)

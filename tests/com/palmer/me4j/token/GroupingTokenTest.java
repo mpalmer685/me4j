@@ -131,6 +131,32 @@ public class GroupingTokenTest
     }
 
     @Test
+    public void testGetMatchingSymbol ()
+    {
+        assertEquals (rightParen.toString (), parens.getMatchingSymbol (leftParen.toString ()));
+        assertEquals (leftParen.toString (), parens.getMatchingSymbol (rightParen.toString ()));
+    }
+
+    @Test
+    public void testGetMatchingSymbolWithInvalidSymbolThrowsException ()
+    {
+        Exception expected = null;
+
+        try
+        {
+            parens.getMatchingSymbol (".");
+            fail ("Did not throw exception.");
+        }
+        catch (Exception e)
+        {
+            expected = e;
+        }
+
+        assertNotNull (expected);
+        assertTrue (expected instanceof IllegalArgumentException);
+    }
+
+    @Test
     public void testToString () throws Exception
     {
         assertEquals ("()", parens.toString ());
@@ -205,7 +231,7 @@ public class GroupingTokenTest
         assertNotEquals (x.hashCode (), notX.hashCode ());
     }
 
-    private static Operator dummyOperator = new Operator ()
+    private static final Operator dummyOperator = new Operator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)

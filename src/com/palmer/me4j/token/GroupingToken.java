@@ -1,6 +1,8 @@
 package com.palmer.me4j.token;
 
 /**
+ * A Token which represents the matching pair of symbols used for grouping.
+ *
  * Created by Mike Palmer on 3/29/14.
  */
 public class GroupingToken extends Token
@@ -8,6 +10,11 @@ public class GroupingToken extends Token
     private final OperatorToken m_leftOperator;
     private final OperatorToken m_rightOperator;
 
+    /**
+     * Creates a new GroupingToken instance with the specified left and right symbols.
+     * @param leftSymbol the symbol that represents the left grouping token
+     * @param rightSymbol the symbol that represents the right grouping token
+     */
     public GroupingToken (String leftSymbol, String rightSymbol)
     {
         if (leftSymbol == null || leftSymbol.isEmpty ())
@@ -39,7 +46,32 @@ public class GroupingToken extends Token
         return m_rightOperator;
     }
 
-    private static Operator dummyOperator = new Operator ()
+    /**
+     * Returns the symbol for this GroupingToken that matches (i.e. is paired with) the specified symbol.
+     * @param symbol the symbol whose match is desired
+     * @return the symbol that matches the specified symbol
+     */
+    public String getMatchingSymbol (String symbol)
+    {
+        String matchingSymbol;
+
+        if (m_leftOperator.toString ().equals (symbol))
+        {
+            matchingSymbol = m_rightOperator.toString ();
+        }
+        else if (m_rightOperator.toString ().equals (symbol))
+        {
+            matchingSymbol = m_leftOperator.toString ();
+        }
+        else
+        {
+            throw new IllegalArgumentException ("The symbol " + symbol + " is not valid.");
+        }
+
+        return matchingSymbol;
+    }
+
+    private static final Operator dummyOperator = new Operator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
