@@ -1,6 +1,8 @@
 package com.palmer.me4j.token;
 
 /**
+ * A Token that represents an Operator, which can perform operations on operands.
+ *
  * Created by Mike Palmer on 3/27/14.
  */
 public class OperatorToken extends Token
@@ -9,6 +11,13 @@ public class OperatorToken extends Token
     private final Operator m_operator;
     private final int      m_precedence;
 
+    /**
+     * Creates a new OperatorToken instance.
+     * @param symbol the String that will be used to represent this operator in the expression string
+     * @param precedence the precedence value of this operator. A higher value indicates higher precedence when
+     *                   determining order of operations.
+     * @param operator the Operator class which will handle performing operations on operands
+     */
     public OperatorToken (String symbol, int precedence, Operator operator)
     {
         if (symbol == null || symbol.isEmpty ())
@@ -40,6 +49,13 @@ public class OperatorToken extends Token
         return m_precedence;
     }
 
+    /**
+     * Performs this operator's operation on a left and right operand.
+     * @param leftOperand the left operand
+     * @param rightOperand the right operand
+     * @return a new OperandToken whose value is the result of performing this operator's operation on the left
+     * and right operand
+     */
     public OperandToken performOperation (OperandToken leftOperand, OperandToken rightOperand)
     {
         double result = m_operator.operate (leftOperand.getValue (), rightOperand.getValue ());

@@ -8,6 +8,8 @@ import com.palmer.me4j.token.builtin.*;
 import java.util.*;
 
 /**
+ * Converts an expression string into operand and operator tokens.
+ *
  * Created by Mike Palmer on 3/29/14.
  */
 class TokenScanner

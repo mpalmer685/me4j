@@ -9,7 +9,7 @@ import com.palmer.me4j.token.Precedence;
  */
 public class MultiplicationOperatorToken extends OperatorToken
 {
-    private static Operator multiplyOperator = new Operator ()
+    private static final Operator multiplyOperator = new Operator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)

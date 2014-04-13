@@ -1,6 +1,9 @@
 package com.palmer.me4j.token;
 
 /**
+ * Contains values for declaring operator precedence. Higher integer values represent higher precedence when determining
+ * order of operations.
+ *
  * Created by Mike Palmer on 3/27/14.
  */
 public final class Precedence

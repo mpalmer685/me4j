@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Stack;
 
 /**
+ * Evaluates a sequence of Tokens that have been parsed from an expression string.  Evaluation includes converting the
+ * expression from an infix List to a postfix Stack, and evaluating the Stack to determine a numerical result.
+ *
  * Created by Mike Palmer on 3/29/14.
  */
-public class TokenEvaluator
+class TokenEvaluator
 {
     private final List<Token>          m_tokens;
     private       Stack<OperatorToken> m_operatorStack;
@@ -19,11 +22,31 @@ public class TokenEvaluator
         m_tokens = tokens;
     }
 
-    public static double evaluateTokens (List<Token> tokens)
+    static double evaluateTokens (List<Token> tokens)
     {
         TokenEvaluator evaluator = new TokenEvaluator (tokens);
         evaluator.convertInfixToPostfix ();
         return evaluator.evaluatePostfixStack ();
+    }
+
+    private static <T> Stack<T> reverseStackOrder (Stack<T> originalStack)
+    {
+        Stack<T> reversedStack = new Stack<> ();
+
+        while (!originalStack.isEmpty ())
+        {
+            reversedStack.push (originalStack.pop ());
+        }
+
+        return reversedStack;
+    }
+
+    private static void processOperatorToken (OperatorToken operator, Stack<OperandToken> operandStack)
+    {
+        OperandToken rightOperand = operandStack.pop ();
+        OperandToken leftOperand = operandStack.pop ();
+
+        operandStack.push (operator.performOperation (leftOperand, rightOperand));
     }
 
     private void convertInfixToPostfix ()
@@ -83,18 +106,6 @@ public class TokenEvaluator
                currentOperator.getPrecedence () == Precedence.GROUPING_RIGHT);
     }
 
-    private static <T> Stack<T> reverseStackOrder (Stack<T> originalStack)
-    {
-        Stack<T> reversedStack = new Stack<> ();
-
-        while (!originalStack.isEmpty ())
-        {
-            reversedStack.push (originalStack.pop ());
-        }
-
-        return reversedStack;
-    }
-
     private double evaluatePostfixStack ()
     {
         Stack<OperandToken> operandStack = new Stack<> ();
@@ -114,13 +125,5 @@ public class TokenEvaluator
         }
 
         return operandStack.peek ().getValue ();
-    }
-
-    private static void processOperatorToken (OperatorToken operator, Stack<OperandToken> operandStack)
-    {
-        OperandToken rightOperand = operandStack.pop ();
-        OperandToken leftOperand = operandStack.pop ();
-
-        operandStack.push (operator.performOperation (leftOperand, rightOperand));
     }
 }

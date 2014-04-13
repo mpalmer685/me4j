@@ -1,12 +1,18 @@
 package com.palmer.me4j.token;
 
 /**
+ * A Token which represents an operand with a scalar value.
+ *
  * Created by Mike Palmer on 3/27/14.
  */
 public class OperandToken extends Token
 {
     private final double m_value;
 
+    /**
+     * Creates a new OperandToken instance with the specified value.
+     * @param value the scalar (magnitude) value of the operand
+     */
     public OperandToken (double value)
     {
         m_value = value;

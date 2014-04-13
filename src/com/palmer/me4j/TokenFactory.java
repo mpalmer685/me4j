@@ -4,6 +4,8 @@ import com.palmer.me4j.token.OperandToken;
 import com.palmer.me4j.token.Token;
 
 /**
+ * Attempts to build a Token from string input.
+ *
  * Created by Mike Palmer on 3/28/14.
  */
 class TokenFactory

@@ -182,7 +182,7 @@ public class OperatorTokenTest
         assertNotEquals (x.hashCode (), notX.hashCode ());
     }
 
-    private static Operator addOperator = new Operator ()
+    private static final Operator addOperator = new Operator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
@@ -191,7 +191,7 @@ public class OperatorTokenTest
         }
     };
 
-    private static Operator divideOperator = new Operator ()
+    private static final Operator divideOperator = new Operator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
@@ -200,7 +200,7 @@ public class OperatorTokenTest
         }
     };
 
-    private static Operator dummyOperator = new Operator ()
+    private static final Operator dummyOperator = new Operator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
