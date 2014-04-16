@@ -55,7 +55,6 @@ Therefore, each symbol must be separated by whitespace.  For example:
 
 In no particular order
 
-- Exponent operator (^)
 - Improve parser to remove whitespace requirement
 - Add support for parsing operands written in scientific notation
 - Unary operators, such as negation ( - ) and factorial ( ! )
