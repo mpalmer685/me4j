@@ -23,8 +23,8 @@ public class GroupingTokenTest
     public void setUp ()
     {
         parens = new GroupingToken ("(", ")");
-        leftParen = new OperatorToken ("(", Precedence.GROUPING_LEFT, dummyOperator);
-        rightParen = new OperatorToken (")", Precedence.GROUPING_RIGHT, dummyOperator);
+        leftParen = new OperatorToken ("(", Precedence.GROUPING_LEFT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        rightParen = new OperatorToken (")", Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
 
         x = new GroupingToken ("(", ")");
         y = new GroupingToken ("(", ")");

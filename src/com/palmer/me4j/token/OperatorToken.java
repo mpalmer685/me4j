@@ -10,6 +10,7 @@ public class OperatorToken extends Token
     private final String   m_symbol;
     private final Operator m_operator;
     private final int      m_precedence;
+    private final Associativity m_associativity;
 
     /**
      * Creates a new OperatorToken instance.
@@ -18,7 +19,7 @@ public class OperatorToken extends Token
      *                   determining order of operations.
      * @param operator the Operator class which will handle performing operations on operands
      */
-    public OperatorToken (String symbol, int precedence, Operator operator)
+    public OperatorToken (String symbol, int precedence, Associativity associativity, Operator operator)
     {
         if (symbol == null || symbol.isEmpty ())
         {
@@ -36,6 +37,7 @@ public class OperatorToken extends Token
         m_symbol = symbol;
         m_operator = operator;
         m_precedence = precedence;
+        m_associativity = associativity;
     }
 
     @Override
@@ -47,6 +49,11 @@ public class OperatorToken extends Token
     public int getPrecedence ()
     {
         return m_precedence;
+    }
+
+    public Associativity getAssociativity ()
+    {
+        return m_associativity;
     }
 
     /**

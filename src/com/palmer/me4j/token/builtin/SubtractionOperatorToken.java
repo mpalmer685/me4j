@@ -1,5 +1,6 @@
 package com.palmer.me4j.token.builtin;
 
+import com.palmer.me4j.token.Associativity;
 import com.palmer.me4j.token.Operator;
 import com.palmer.me4j.token.OperatorToken;
 import com.palmer.me4j.token.Precedence;
@@ -23,6 +24,6 @@ public class SubtractionOperatorToken extends OperatorToken
 
     private SubtractionOperatorToken ()
     {
-        super (SYMBOL, Precedence.ADDITION_SUBTRACTION, subtractOperator);
+        super (SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, subtractOperator);
     }
 }

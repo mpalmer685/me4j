@@ -1,5 +1,6 @@
 package com.palmer.me4j.token.builtin;
 
+import com.palmer.me4j.token.Associativity;
 import com.palmer.me4j.token.Operator;
 import com.palmer.me4j.token.OperatorToken;
 import com.palmer.me4j.token.Precedence;
@@ -23,6 +24,6 @@ public class DivisionOperatorToken extends OperatorToken
 
     private DivisionOperatorToken ()
     {
-        super (SYMBOL, Precedence.MULTIPLICATION_DIVISION, divideOperator);
+        super (SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, divideOperator);
     }
 }

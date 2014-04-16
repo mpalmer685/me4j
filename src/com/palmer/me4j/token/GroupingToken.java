@@ -26,8 +26,8 @@ public class GroupingToken extends Token
             throw new IllegalArgumentException ("Right symbol must be set.");
         }
 
-        m_leftOperator = new OperatorToken (leftSymbol, Precedence.GROUPING_LEFT, dummyOperator);
-        m_rightOperator = new OperatorToken (rightSymbol, Precedence.GROUPING_RIGHT, dummyOperator);
+        m_leftOperator = new OperatorToken (leftSymbol, Precedence.GROUPING_LEFT, Associativity.RIGHT_ASSOCIATIVE, dummyOperator);
+        m_rightOperator = new OperatorToken (rightSymbol, Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
     }
 
     @Override

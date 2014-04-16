@@ -40,20 +40,20 @@ public class OperatorTokenTest
         left = new OperandToken (2.0);
         right = new OperandToken (5.0);
 
-        add = new OperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, addOperator);
-        divide = new OperatorToken (DIVIDE_SYMBOL, Precedence.MULTIPLICATION_DIVISION, divideOperator);
+        add = new OperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, addOperator);
+        divide = new OperatorToken (DIVIDE_SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, divideOperator);
 
-        x = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, dummyOperator);
-        y = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, dummyOperator);
-        z = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, dummyOperator);
-        notX = new OperatorToken (MULTIPLICATION_SYMBOL, Precedence.MULTIPLICATION_DIVISION, dummyOperator);
+        x = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        y = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        z = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        notX = new OperatorToken (MULTIPLICATION_SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
     }
 
     @Test
     public void testNullSymbolThrowsException ()
     {
         expectedException.expect (IllegalArgumentException.class);
-        new OperatorToken (null, Precedence.ADDITION_SUBTRACTION, dummyOperator);
+        new OperatorToken (null, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
         expectedException = ExpectedException.none ();
     }
 
@@ -61,7 +61,7 @@ public class OperatorTokenTest
     public void testNullOperatorThrowsException ()
     {
         expectedException.expect (IllegalArgumentException.class);
-        new OperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, null);
+        new OperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, null);
         expectedException = ExpectedException.none ();
     }
 
@@ -69,7 +69,7 @@ public class OperatorTokenTest
     public void testNegativePrecedenceThrowsException ()
     {
         expectedException.expect (IllegalArgumentException.class);
-        new OperatorToken (ADD_SYMBOL, -1, dummyOperator);
+        new OperatorToken (ADD_SYMBOL, -1, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
         expectedException = ExpectedException.none ();
     }
 
@@ -213,12 +213,12 @@ public class OperatorTokenTest
     {
         List<OperatorToken> tokens = new ArrayList<> ();
 
-        tokens.add (new OperatorToken ("lowest", Precedence.ADDITION_SUBTRACTION, dummyOperator));
-        tokens.add (new OperatorToken ("lower", Precedence.MULTIPLICATION_DIVISION, dummyOperator));
-        tokens.add (new OperatorToken ("middle", Precedence.UNARY, dummyOperator));
-        tokens.add (new OperatorToken ("higher", Precedence.EXPONENTIATION, dummyOperator));
-        tokens.add (new OperatorToken ("highest", Precedence.GROUPING_RIGHT, dummyOperator));
-        tokens.add (new OperatorToken ("highestest", Precedence.GROUPING_LEFT, dummyOperator));
+        tokens.add (new OperatorToken ("lowest", Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new OperatorToken ("lower", Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new OperatorToken ("middle", Precedence.UNARY, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new OperatorToken ("higher", Precedence.EXPONENTIATION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new OperatorToken ("highest", Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new OperatorToken ("highestest", Precedence.GROUPING_LEFT, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
 
         return tokens;
     }

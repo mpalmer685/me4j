@@ -26,6 +26,20 @@ the background, the `MathEvaluator` class is performing the same operation as ab
 double shouldBeTwo = MathEvaluator.evaluate ("1 + 1");
 ```
 
+## Supported Operator Symbols
+
+### Operations
+- Addition ("+")
+- Subtraction ("-")
+- Multiplication ("*")
+- Division ("/")
+- Exponentiation ("^")
+
+### Grouping
+- Parentheses ("()")
+- Square Brackets ("[]")
+- Curly Brackets ("{}")
+
 ## Formatting
 
 The current parser uses a whitespace delimiter when parsing tokens (individual symbols) from the expression string.

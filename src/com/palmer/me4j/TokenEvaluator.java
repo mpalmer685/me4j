@@ -100,10 +100,21 @@ class TokenEvaluator
 
     private boolean shouldMoveOperatorToPostfixStack (OperatorToken currentOperator)
     {
-        return !m_operatorStack.isEmpty () &&
-               ((currentOperator.getPrecedence () <= m_operatorStack.peek ().getPrecedence () &&
-               m_operatorStack.peek ().getPrecedence () < Precedence.GROUPING_LEFT) ||
-               currentOperator.getPrecedence () == Precedence.GROUPING_RIGHT);
+        if (m_operatorStack.isEmpty ())
+        {
+            return false;
+        }
+        else
+        {
+            boolean isCurrentOperatorPrecedenceLower = (currentOperator.getPrecedence () < m_operatorStack.peek ().getPrecedence () ||
+                                                        (currentOperator.getPrecedence () == m_operatorStack.peek ().getPrecedence () &&
+                                                        currentOperator.getAssociativity () == Associativity.LEFT_ASSOCIATIVE));
+
+            boolean isStackOperatorNoGroupingLeft = m_operatorStack.peek ().getPrecedence () < Precedence.GROUPING_LEFT;
+            boolean isCurrentOperatorGroupingRight = currentOperator.getPrecedence () == Precedence.GROUPING_RIGHT;
+
+            return ((isCurrentOperatorPrecedenceLower && isStackOperatorNoGroupingLeft) || isCurrentOperatorGroupingRight);
+        }
     }
 
     private double evaluatePostfixStack ()
