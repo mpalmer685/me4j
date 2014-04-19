@@ -18,22 +18,25 @@ public class TokenScannerTest
     @Test
     public void testTokenize ()
     {
-        String input = "+ - * / ( ) [ ] { } 1.0 -1.0 0.0";
+        String input = "  { [(1.0 +-1.0*0.0/1.0 -0.0 )  ]   } ";
+//        String input = "+ - * / ( ) [ ] { } 1.0 -1.0 0.0";
         Token[] tokenArray = new Token[]
                 {
-                        AdditionOperatorToken.INSTANCE,
-                        SubtractionOperatorToken.INSTANCE,
-                        MultiplicationOperatorToken.INSTANCE,
-                        DivisionOperatorToken.INSTANCE,
-                        ParensGroupingToken.INSTANCE.getLeftOperator (),
-                        ParensGroupingToken.INSTANCE.getRightOperator (),
-                        SquareBraceGroupingToken.INSTANCE.getLeftOperator (),
-                        SquareBraceGroupingToken.INSTANCE.getRightOperator (),
                         CurlyBraceGroupingToken.INSTANCE.getLeftOperator (),
-                        CurlyBraceGroupingToken.INSTANCE.getRightOperator (),
+                        SquareBraceGroupingToken.INSTANCE.getLeftOperator (),
+                        ParensGroupingToken.INSTANCE.getLeftOperator (),
                         new OperandToken (1.0),
+                        AdditionOperatorToken.INSTANCE,
                         new OperandToken (-1.0),
-                        new OperandToken (0.0)
+                        MultiplicationOperatorToken.INSTANCE,
+                        new OperandToken (0.0),
+                        DivisionOperatorToken.INSTANCE,
+                        new OperandToken (1.0),
+                        SubtractionOperatorToken.INSTANCE,
+                        new OperandToken (0.0),
+                        ParensGroupingToken.INSTANCE.getRightOperator (),
+                        SquareBraceGroupingToken.INSTANCE.getRightOperator (),
+                        CurlyBraceGroupingToken.INSTANCE.getRightOperator (),
                 };
         List<Token> tokens = Arrays.asList (tokenArray);
 

@@ -3,6 +3,7 @@ package com.palmer.me4j;
 import com.palmer.me4j.token.GroupingToken;
 import com.palmer.me4j.token.OperatorToken;
 import com.palmer.me4j.token.Token;
+import com.palmer.me4j.token.TokenType;
 import com.palmer.me4j.token.builtin.*;
 
 import java.util.*;
@@ -31,12 +32,17 @@ class TokenScanner
         registerGroupingToken (CurlyBraceGroupingToken.INSTANCE);
     }
 
-    private final Scanner m_scanner;
+    private final String m_inputString;
+
+    private int m_tokenStart;
+    private int m_tokenEnd;
+    private TokenType m_lastTokenType;
 
     private TokenScanner (String input)
     {
-        m_scanner = new Scanner (input);
-        m_scanner.useDelimiter (" ");
+        m_inputString = input.trim ();
+
+        m_tokenStart = m_tokenEnd = 0;
     }
 
     static List<Token> tokenize (String input)
@@ -101,15 +107,46 @@ class TokenScanner
                  (c == '.'));
     }
 
+    private static boolean isDigitOrDecimal (char c)
+    {
+        return Character.isDigit (c) || (c == '.');
+    }
+
     private boolean hasNextToken ()
     {
-        return m_scanner.hasNext ();
+        return m_tokenEnd < m_inputString.length ();
     }
 
     private Token nextToken ()
     {
-        String symbol = m_scanner.next ();
-        return TokenFactory.buildToken (symbol);
+        Token nextToken;
+
+        m_tokenStart = m_tokenEnd;
+
+        while (Character.isWhitespace (m_inputString.charAt (m_tokenStart)))
+        {
+            m_tokenStart++;
+        }
+
+        m_tokenEnd = m_tokenStart + 1;
+
+        if (isDigitOrDecimal (m_inputString.charAt (m_tokenStart)) || (m_lastTokenType == TokenType.OPERATOR && m_inputString.charAt (m_tokenStart) == '-'))
+        {
+            while (m_tokenEnd < m_inputString.length () && isDigitOrDecimal (m_inputString.charAt (m_tokenEnd)))
+            {
+                m_tokenEnd++;
+            }
+
+            nextToken = TokenFactory.buildToken (m_inputString.substring (m_tokenStart, m_tokenEnd));
+        }
+        else
+        {
+            nextToken = TokenFactory.buildToken (String.valueOf (m_inputString.charAt (m_tokenStart)));
+        }
+
+        m_lastTokenType = nextToken.getTokenType ();
+
+        return nextToken;
     }
 
     private static final class GroupingCounter

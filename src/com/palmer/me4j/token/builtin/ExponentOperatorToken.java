@@ -1,16 +1,13 @@
 package com.palmer.me4j.token.builtin;
 
-import com.palmer.me4j.token.Associativity;
-import com.palmer.me4j.token.Operator;
-import com.palmer.me4j.token.OperatorToken;
-import com.palmer.me4j.token.Precedence;
+import com.palmer.me4j.token.*;
 
 /**
  * Created by Mike Palmer on 4/15/14.
  */
-public class ExponentOperatorToken extends OperatorToken
+public class ExponentOperatorToken extends BinaryOperatorToken
 {
-    private static final Operator exponentOperator = new Operator ()
+    private static final BinaryOperator exponentOperator = new BinaryOperator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)

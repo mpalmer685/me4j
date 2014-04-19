@@ -7,8 +7,8 @@ package com.palmer.me4j.token;
  */
 public class GroupingToken extends Token
 {
-    private final OperatorToken m_leftOperator;
-    private final OperatorToken m_rightOperator;
+    private final BinaryOperatorToken m_leftOperator;
+    private final BinaryOperatorToken m_rightOperator;
 
     /**
      * Creates a new GroupingToken instance with the specified left and right symbols.
@@ -26,8 +26,8 @@ public class GroupingToken extends Token
             throw new IllegalArgumentException ("Right symbol must be set.");
         }
 
-        m_leftOperator = new OperatorToken (leftSymbol, Precedence.GROUPING_LEFT, Associativity.RIGHT_ASSOCIATIVE, dummyOperator);
-        m_rightOperator = new OperatorToken (rightSymbol, Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        m_leftOperator = new BinaryOperatorToken (leftSymbol, Precedence.GROUPING_LEFT, Associativity.RIGHT_ASSOCIATIVE, dummyOperator);
+        m_rightOperator = new BinaryOperatorToken (rightSymbol, Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
     }
 
     @Override
@@ -36,12 +36,12 @@ public class GroupingToken extends Token
         return TokenType.OPERATOR;
     }
 
-    public OperatorToken getLeftOperator ()
+    public BinaryOperatorToken getLeftOperator ()
     {
         return m_leftOperator;
     }
 
-    public OperatorToken getRightOperator ()
+    public BinaryOperatorToken getRightOperator ()
     {
         return m_rightOperator;
     }
@@ -71,7 +71,7 @@ public class GroupingToken extends Token
         return matchingSymbol;
     }
 
-    private static final Operator dummyOperator = new Operator ()
+    private static final BinaryOperator dummyOperator = new BinaryOperator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)

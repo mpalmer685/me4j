@@ -23,8 +23,8 @@ public class GroupingTokenTest
     public void setUp ()
     {
         parens = new GroupingToken ("(", ")");
-        leftParen = new OperatorToken ("(", Precedence.GROUPING_LEFT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
-        rightParen = new OperatorToken (")", Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        leftParen = new BinaryOperatorToken ("(", Precedence.GROUPING_LEFT, Associativity.RIGHT_ASSOCIATIVE, dummyOperator);
+        rightParen = new BinaryOperatorToken (")", Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
 
         x = new GroupingToken ("(", ")");
         y = new GroupingToken ("(", ")");
@@ -231,7 +231,7 @@ public class GroupingTokenTest
         assertNotEquals (x.hashCode (), notX.hashCode ());
     }
 
-    private static final Operator dummyOperator = new Operator ()
+    private static final BinaryOperator dummyOperator = new BinaryOperator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)

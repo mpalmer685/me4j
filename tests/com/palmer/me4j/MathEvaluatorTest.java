@@ -41,26 +41,6 @@ public class MathEvaluatorTest
     }
 
     @Test
-    public void testInvalidFormattingThrowsException ()
-    {
-        String expression = "(6 + 4) / 2";
-        Exception expected = null;
-
-        try
-        {
-            MathEvaluator.evaluate (expression);
-            fail ("Invalid expression formatting did not throw exception.");
-        }
-        catch (Exception e)
-        {
-            expected = e;
-        }
-
-        assertNotNull (expected);
-        assertTrue (expected instanceof IllegalArgumentException);
-    }
-
-    @Test
     public void testInvalidExpressionThrowsException ()
     {
         String expression = "6 +";

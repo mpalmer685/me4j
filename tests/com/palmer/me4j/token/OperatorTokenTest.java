@@ -23,8 +23,8 @@ public class OperatorTokenTest
     private OperandToken left;
     private OperandToken right;
 
-    private OperatorToken add;
-    private OperatorToken divide;
+    private BinaryOperatorToken add;
+    private BinaryOperatorToken divide;
 
     private OperatorToken x;
     private OperatorToken y;
@@ -40,20 +40,20 @@ public class OperatorTokenTest
         left = new OperandToken (2.0);
         right = new OperandToken (5.0);
 
-        add = new OperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, addOperator);
-        divide = new OperatorToken (DIVIDE_SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, divideOperator);
+        add = new BinaryOperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, addOperator);
+        divide = new BinaryOperatorToken (DIVIDE_SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, divideOperator);
 
-        x = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
-        y = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
-        z = new OperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
-        notX = new OperatorToken (MULTIPLICATION_SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        x = new BinaryOperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        y = new BinaryOperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        z = new BinaryOperatorToken (DUMMY_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        notX = new BinaryOperatorToken (MULTIPLICATION_SYMBOL, Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
     }
 
     @Test
     public void testNullSymbolThrowsException ()
     {
         expectedException.expect (IllegalArgumentException.class);
-        new OperatorToken (null, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        new BinaryOperatorToken (null, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
         expectedException = ExpectedException.none ();
     }
 
@@ -61,7 +61,7 @@ public class OperatorTokenTest
     public void testNullOperatorThrowsException ()
     {
         expectedException.expect (IllegalArgumentException.class);
-        new OperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, null);
+        new BinaryOperatorToken (ADD_SYMBOL, Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, null);
         expectedException = ExpectedException.none ();
     }
 
@@ -69,7 +69,7 @@ public class OperatorTokenTest
     public void testNegativePrecedenceThrowsException ()
     {
         expectedException.expect (IllegalArgumentException.class);
-        new OperatorToken (ADD_SYMBOL, -1, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        new BinaryOperatorToken (ADD_SYMBOL, -1, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
         expectedException = ExpectedException.none ();
     }
 
@@ -182,7 +182,7 @@ public class OperatorTokenTest
         assertNotEquals (x.hashCode (), notX.hashCode ());
     }
 
-    private static final Operator addOperator = new Operator ()
+    private static final BinaryOperator addOperator = new BinaryOperator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
@@ -191,7 +191,7 @@ public class OperatorTokenTest
         }
     };
 
-    private static final Operator divideOperator = new Operator ()
+    private static final BinaryOperator divideOperator = new BinaryOperator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
@@ -200,7 +200,7 @@ public class OperatorTokenTest
         }
     };
 
-    private static final Operator dummyOperator = new Operator ()
+    private static final BinaryOperator dummyOperator = new BinaryOperator ()
     {
         @Override
         public double operate (double leftOperand, double rightOperand)
@@ -213,12 +213,12 @@ public class OperatorTokenTest
     {
         List<OperatorToken> tokens = new ArrayList<> ();
 
-        tokens.add (new OperatorToken ("lowest", Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
-        tokens.add (new OperatorToken ("lower", Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
-        tokens.add (new OperatorToken ("middle", Precedence.UNARY, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
-        tokens.add (new OperatorToken ("higher", Precedence.EXPONENTIATION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
-        tokens.add (new OperatorToken ("highest", Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
-        tokens.add (new OperatorToken ("highestest", Precedence.GROUPING_LEFT, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new BinaryOperatorToken ("lowest", Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new BinaryOperatorToken ("lower", Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new BinaryOperatorToken ("middle", Precedence.UNARY, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new BinaryOperatorToken ("higher", Precedence.EXPONENTIATION, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new BinaryOperatorToken ("highest", Precedence.GROUPING_RIGHT, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
+        tokens.add (new BinaryOperatorToken ("highestest", Precedence.GROUPING_LEFT, Associativity.LEFT_ASSOCIATIVE, dummyOperator));
 
         return tokens;
     }

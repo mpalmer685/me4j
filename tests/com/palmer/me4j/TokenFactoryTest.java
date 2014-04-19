@@ -1,7 +1,7 @@
 package com.palmer.me4j;
 
+import com.palmer.me4j.token.BinaryOperatorToken;
 import com.palmer.me4j.token.OperandToken;
-import com.palmer.me4j.token.OperatorToken;
 import com.palmer.me4j.token.Token;
 import com.palmer.me4j.token.builtin.*;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class TokenFactoryTest
         {
             token = TokenFactory.buildToken (operator);
 
-            assertTrue (token instanceof OperatorToken);
+            assertTrue (token instanceof BinaryOperatorToken);
         }
     }
 

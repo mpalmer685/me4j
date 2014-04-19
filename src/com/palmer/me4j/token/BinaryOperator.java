@@ -5,7 +5,7 @@ package com.palmer.me4j.token;
  *
  * Created by Mike Palmer on 3/27/14.
  */
-public interface Operator
+public interface BinaryOperator
 {
     /**
      * Performs a mathematical operation on a left and right operand.

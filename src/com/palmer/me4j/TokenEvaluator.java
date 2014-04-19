@@ -41,7 +41,7 @@ class TokenEvaluator
         return reversedStack;
     }
 
-    private static void processOperatorToken (OperatorToken operator, Stack<OperandToken> operandStack)
+    private static void processOperatorToken (BinaryOperatorToken operator, Stack<OperandToken> operandStack)
     {
         OperandToken rightOperand = operandStack.pop ();
         OperandToken leftOperand = operandStack.pop ();
@@ -131,7 +131,7 @@ class TokenEvaluator
             }
             else
             {
-                processOperatorToken ((OperatorToken) currentToken, operandStack);
+                processOperatorToken ((BinaryOperatorToken) currentToken, operandStack);
             }
         }
 

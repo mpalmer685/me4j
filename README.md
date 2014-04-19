@@ -42,22 +42,15 @@ double shouldBeTwo = MathEvaluator.evaluate ("1 + 1");
 
 ## Formatting
 
-The current parser uses a whitespace delimiter when parsing tokens (individual symbols) from the expression string.
-Therefore, each symbol must be separated by whitespace.  For example:
-
-    Good:
-    "( ( 2 * 3 ) + 4 ) / 5"
-
-    Bad:
-    "((2 * 3) + 4) / 5"
+The latest revision (4/19/14) removes the whitespace delimiter requirement, so any string, with or without whitespace, should
+be properly parsed.
 
 ## Future Plans
 
 In no particular order
 
-- Improve parser to remove whitespace requirement
 - Add support for parsing operands written in scientific notation
-- Unary operators, such as negation ( - ) and factorial ( ! )
+- Unary operators, such as negation ( - ) and factorial ( ! ) -- in progress
 - Support common functions like sine/cosine/tangent
 - Support custom functions
 - Support variables (operands whose values can be defined after parsing)
