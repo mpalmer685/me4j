@@ -44,34 +44,55 @@ public class TokenScannerTest
     public void testInvalidOperatorThrowsException ()
     {
         String input = "+ - * / ( ) 1.0 & -1.0 0.0";
+        String errorMessage = "Invalid operator symbol did not throw exception.";
 
-        Exception expected = null;
-
-        try
-        {
-            TokenScanner.tokenize (input);
-            fail ("Invalid operator symbol did not throw exception.");
-        }
-        catch (Exception e)
-        {
-            expected = e;
-        }
-
-        assertNotNull (expected);
-        assertTrue (expected instanceof UnsupportedOperationException);
+        testStringThrowsException (input, UnsupportedOperationException.class, errorMessage);
     }
 
     @Test
-    public void testUnmatchedGroupingSymbolThrowsException ()
+    public void testUnmatchedLeftGroupingSymbolThrowsException ()
     {
         String input = "+ - * / ( 1.0 -1.0 0.0";
+        String errorMessage = "Unmatched grouping symbol did not throw exception.";
 
+        testStringThrowsException (input, UnsupportedOperationException.class, errorMessage);
+    }
+
+    @Test
+    public void testUnmatchedRightGroupingSymbolThrowsException ()
+    {
+        String input = "+ - * / 1.0 -1.0 0.0 )";
+        String errorMessage = "Unmatched grouping symbol did not throw exception.";
+
+        testStringThrowsException (input, UnsupportedOperationException.class, errorMessage);
+    }
+
+    @Test
+    public void testUnbalancedGroupingSymbolsThrowsException ()
+    {
+        String input = "+ - * [ / ( 1.0 -1.0 0.0 )";
+        String errorMessage = "Unmatched grouping symbol did not throw exception.";
+
+        testStringThrowsException (input, UnsupportedOperationException.class, errorMessage);
+    }
+
+    @Test
+    public void testGroupingTokensOutOfOrderThrowsException ()
+    {
+        String input = "( 1.0 + [ 2 - 3.0 )]";
+        String errorMessage = "Out of order grouping tokens did not throw exception.";
+
+        testStringThrowsException (input, UnsupportedOperationException.class, errorMessage);
+    }
+
+    private void testStringThrowsException (String input, Class<? extends Exception> expectedExceptionClass, String errorMessage)
+    {
         Exception expected = null;
 
         try
         {
             TokenScanner.tokenize (input);
-            fail ("Unmatched grouping symbol did not throw exception.");
+            fail (errorMessage);
         }
         catch (Exception e)
         {
@@ -79,6 +100,6 @@ public class TokenScannerTest
         }
 
         assertNotNull (expected);
-        assertTrue (expected instanceof UnsupportedOperationException);
+        assertTrue (expectedExceptionClass.isInstance (expected));
     }
 }

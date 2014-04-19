@@ -90,10 +90,7 @@ class TokenScanner
             }
         }
 
-        if (!counter.areGroupingsMatched ())
-        {
-            throw new UnsupportedOperationException ("Invalid expression: Open and close grouping symbols do not match.");
-        }
+        counter.checkGroupingsAreMatched ();
     }
 
     private static boolean isCharacterPossibleOperator (char c)
@@ -117,22 +114,22 @@ class TokenScanner
 
     private static final class GroupingCounter
     {
-        private final Map<String, Integer> m_leftTokenCounts;
-        private final Map<String, Integer> m_rightTokenCounts;
+        private final Map<String, GroupingToken> m_leftTokens;
+        private final Map<String, GroupingToken> m_rightTokens;
 
-        private final Collection<GroupingToken> m_groupingTokens;
+        private final Stack<GroupingToken> m_tokenStack;
 
         GroupingCounter (Collection<GroupingToken> tokens)
         {
-            m_leftTokenCounts = new HashMap<> ();
-            m_rightTokenCounts = new HashMap<> ();
+            m_leftTokens = new HashMap<> ();
+            m_rightTokens = new HashMap<> ();
 
-            m_groupingTokens = tokens;
+            m_tokenStack = new Stack<> ();
 
             for (GroupingToken token : tokens)
             {
-                m_leftTokenCounts.put (token.getLeftOperator ().toString (), 0);
-                m_rightTokenCounts.put (token.getRightOperator ().toString (), 0);
+                m_leftTokens.put (token.getLeftOperator ().toString (), token);
+                m_rightTokens.put (token.getRightOperator ().toString (), token);
             }
         }
 
@@ -140,17 +137,32 @@ class TokenScanner
         {
             boolean status = false;
 
-            if (m_leftTokenCounts.containsKey (symbol))
+            if (m_leftTokens.containsKey (symbol))
             {
-                int count = m_leftTokenCounts.get (symbol);
-                m_leftTokenCounts.put (symbol, count + 1);
+                m_tokenStack.push (m_leftTokens.get (symbol));
 
                 status = true;
             }
-            else if (m_rightTokenCounts.containsKey (symbol))
+            else if (m_rightTokens.containsKey (symbol))
             {
-                int count = m_rightTokenCounts.get (symbol);
-                m_rightTokenCounts.put (symbol, count + 1);
+                GroupingToken leftToken = null;
+                try
+                {
+                    leftToken = m_tokenStack.pop ();
+                }
+                catch (EmptyStackException e)
+                {
+                    // TODO Create "malformed expression" error because there is an unmatched right grouping operator
+                    throw new UnsupportedOperationException ();
+                }
+
+                GroupingToken rightToken = m_rightTokens.get (symbol);
+
+                if (!rightToken.equals (leftToken))
+                {
+                    // TODO Create "malformed expression" error because there is an unmatched left grouping operator
+                    throw new UnsupportedOperationException ();
+                }
 
                 status = true;
             }
@@ -158,20 +170,13 @@ class TokenScanner
             return status;
         }
 
-        boolean areGroupingsMatched ()
+        void checkGroupingsAreMatched ()
         {
-            for (GroupingToken groupingToken : m_groupingTokens)
+            if (!m_tokenStack.isEmpty ())
             {
-                Integer leftCount = m_leftTokenCounts.get (groupingToken.getLeftOperator ().toString ());
-                Integer rightCount = m_rightTokenCounts.get (groupingToken.getRightOperator ().toString ());
-
-                if (leftCount.intValue () != rightCount.intValue ())
-                {
-                    return false;
-                }
+                // TODO Create "malformed expression" error because there is an unmatched left grouping operator
+                throw new UnsupportedOperationException ();
             }
-
-            return true;
         }
     }
 }
