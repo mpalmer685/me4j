@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Mike Palmer on 3/27/14.
  */
-public class OperatorTokenTest
+public class BinaryOperatorTokenTest
 {
     private static final String DIVIDE_SYMBOL         = "/";
     private static final String ADD_SYMBOL            = "+";
@@ -26,10 +26,10 @@ public class OperatorTokenTest
     private BinaryOperatorToken add;
     private BinaryOperatorToken divide;
 
-    private OperatorToken x;
-    private OperatorToken y;
-    private OperatorToken z;
-    private OperatorToken notX;
+    private BinaryOperatorToken x;
+    private BinaryOperatorToken y;
+    private BinaryOperatorToken z;
+    private BinaryOperatorToken notX;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none ();
@@ -159,6 +159,27 @@ public class OperatorTokenTest
     public void testEqualsFailsWithNull ()
     {
         assertFalse (x.equals (null));
+    }
+
+    @Test
+    public void testEqualsFailsWithDifferentSymbols ()
+    {
+        BinaryOperatorToken differentSymbolToken = new BinaryOperatorToken ("-", Precedence.ADDITION_SUBTRACTION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        assertFalse (x.equals (differentSymbolToken));
+    }
+
+    @Test
+    public void testEqualsFailsWithDifferentPrecedence ()
+    {
+        BinaryOperatorToken differentSymbolToken = new BinaryOperatorToken ("+", Precedence.MULTIPLICATION_DIVISION, Associativity.LEFT_ASSOCIATIVE, dummyOperator);
+        assertFalse (x.equals (differentSymbolToken));
+    }
+
+    @Test
+    public void testEqualsFailsWithDifferentAssociativity ()
+    {
+        BinaryOperatorToken differentSymbolToken = new BinaryOperatorToken ("+", Precedence.ADDITION_SUBTRACTION, Associativity.RIGHT_ASSOCIATIVE, dummyOperator);
+        assertFalse (x.equals (differentSymbolToken));
     }
 
     @Test

@@ -67,7 +67,7 @@ public class UnaryOperatorToken extends OperatorToken
         {
             return false;
         }
-        if (!m_operator.equals (that.m_operator))
+        if (!toString ().equals (that.toString ()))
         {
             return false;
         }
